@@ -80,13 +80,15 @@ GET '/monsters'
       }
     ]
 
-GET '/monsters/?challenge_rating=&type=&alignment=&terrain=
+GET '/monsters/?QUERYNAME=QUERYVALUE
   - gets an array of monsters that fall within the provided parameters
-  - filters include:
-    - cr
+  - variables are chainable
+  - usable filters include (but are NOT limited to):
+    - challenge_rating
     - type
     - alignment
     - terrain
+  
 
 GET '/monsters/id/:id'
   - gets a monster by id
