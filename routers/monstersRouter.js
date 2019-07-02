@@ -12,6 +12,14 @@ router.get('/', (req, res) => {
     ))
 });
 
+router.get('/crMax/:cr', (req, res) => {
+  Monsters.findMaxCr(req.params.cr, req.query)
+    .then(data => res.status(200).json(data))
+    .catch(err => res.status(500).json(
+      { message: "you've met with a terrible fate, haven't you?", error: err }
+    ))
+});
+
 router.get('/id/:id', (req, res) => {
   const id = req.params.id
   Monsters.findById(id)

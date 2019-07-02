@@ -80,7 +80,7 @@ GET '/monsters'
       }
     ]
 
-GET '/monsters/?QUERYNAME=QUERYVALUE
+GET '/monsters/?QUERYNAME=QUERYVALUE;'
   - gets an array of monsters that fall within the provided parameters
   - variables are chainable
   - usable filters include (but are NOT limited to):
@@ -88,7 +88,15 @@ GET '/monsters/?QUERYNAME=QUERYVALUE
     - type
     - alignment
     - terrain
-  
+
+GET '/monsters/crMax/:cr'
+  - gets an array of monsters that fall below the given cr
+  - returns monster objects in array like the one shown above
+
+GET '/monsters/crMax/:cr?QUERYNAME=QUERYVALUE;'
+- gets an array of monsters that fall within the provided parameters AND below the given cr
+- variables are chainable
+- hooray
 
 GET '/monsters/id/:id'
   - gets a monster by id

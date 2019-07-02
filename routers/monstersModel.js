@@ -2,6 +2,7 @@ const db = require("../data/dbConfig.js");
 
 module.exports = {
   find,
+  findMaxCr,
   findById,
   findByName
 };
@@ -14,7 +15,7 @@ async function find(query) {
     console.log(terrain)
     monsters = await db("monsters")
       .where('terrain', 'like', `%${terrain}%`)
-
+      .andWhere(query)
   } else {
     monsters = await db("monsters")
       .where(query)
@@ -37,6 +38,40 @@ async function findById(id) {
   return monsters[0];
 }
 
+async function findMaxCr(cr, query) {
+  const allCrs = [
+    "1/8", "1/4", "1/2", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+    "11", "12", "13", "14", "15", "16", "17", "19", "20", "21", "22", "23", "24"
+  ]
+  const crsToRequest = allCrs.slice(0, allCrs.indexOf(`${cr}`)+1)
+  
+  let monsters
+  if (query.terrain) {
+    const terrain = query.terrain;
+    delete query.terrain;
+    console.log(terrain)
+    monsters = await db("monsters")
+      .where('terrain', 'like', `%${terrain}%`)
+      .andWhere(function() {
+        this.whereIn('challenge_rating', crsToRequest)
+      })
+      .andWhere(query);
+  } else {
+    monsters = await db("monsters")
+      .where(query)
+      .andWhere(function() {
+        this.whereIn('challenge_rating', crsToRequest)
+      })
+  }
+
+  monsters = await findSpeed(monsters);
+  monsters = await findActions(monsters);
+  monsters = await findLegendaries(monsters);
+  monsters = await findSpecials(monsters);
+  monsters = await findReactions(monsters);
+  return monsters;
+}
+
 async function findByName(name) {
   const monsters = await db("monsters").where("name", name);
   monsters = await findSpeed(monsters).first();
@@ -53,12 +88,14 @@ async function findSpeed(monsters) {
       return { ...monster, speed: speed };
     } else {
       return { ...monster, speed: "" };
-    }  });
+    }  
+  });
   const result = await Promise.all(withSpeed);
   return result;
 }
 
 async function findActions(monsters) {
+
   const withActions = monsters.map(async monster => {
     let actions = await db("actions")
       .select("name", "desc", "attack_bonus", "damage_dice", "damage_bonus")
@@ -68,7 +105,8 @@ async function findActions(monsters) {
       return { ...monster, actions: actions };
     } else {
       return { ...monster, actions: "" };
-    }  });
+    }  
+  });
   const result = await Promise.all(withActions);
   return result;
 }

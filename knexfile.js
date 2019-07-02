@@ -5,10 +5,10 @@ module.exports = {
   development: {
     client: 'pg',
     connection: {
-      host : 'localhost',
-      user : 'postgres',
-      password : 'postgrespass',
-      database : 'random-character-generator'
+      host: 'localhost',
+      user: 'postgres',
+      password: 'postgrespass',
+      database: 'random-character-generator'
     },
     migrations: {
       directory: './data/migrations'
