@@ -100,7 +100,6 @@ async function findActions(monsters) {
     let actions = await db("actions")
       .select("name", "desc", "attack_bonus", "damage_dice", "damage_bonus")
       .where("monster_id", monster.id)
-      .first();
     if (actions) {
       return { ...monster, actions: actions };
     } else {
@@ -116,7 +115,6 @@ async function findLegendaries(monsters) {
     let legendary_actions = await db("legendary_actions")
       .select("name", "desc", "attack_bonus", "damage_dice")
       .where("monster_id", monster.id)
-      .first();
     if (legendary_actions) {
       return { ...monster, legendary_actions: legendary_actions };
     } else {
@@ -132,7 +130,6 @@ async function findSpecials(monsters) {
     let special_abilities = await db("special_abilities")
       .select("name", "desc", "attack_bonus", "damage_dice")
       .where("monster_id", monster.id)
-      .first();
     if (special_abilities) {
       return { ...monster, special_abilities: special_abilities };
     } else {
@@ -148,7 +145,6 @@ async function findReactions(monsters) {
     let reactions = await db("reactions")
       .select("name", "desc")
       .where("monster_id", monster.id)
-      .first();
     if (reactions) {
       return { ...monster, reactions: reactions };
     } else {

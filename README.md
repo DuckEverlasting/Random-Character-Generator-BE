@@ -1,6 +1,7 @@
 # Random-Character-Generator-BE
 
 ENDPOINTS:
+https://random-character-generator-be.herokuapp.com/
 
 GET '/'
   - basic message to test if api is running
@@ -96,7 +97,10 @@ GET '/monsters/crMax/:cr'
 GET '/monsters/crMax/:cr?QUERYNAME=QUERYVALUE;'
 - gets an array of monsters that fall within the provided parameters AND below the given cr
 - variables are chainable
-- hooray
+- example: if you enter 
+  https://random-character-generator-be.herokuapp.com/monsters/crMax/1?type=dragon&terrain=Desert&size=Medium
+  you should recieve back just the object for "Brass Dragon Wyrmling" (id: 53)
+
 
 GET '/monsters/id/:id'
   - gets a monster by id
